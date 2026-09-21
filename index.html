@@ -1,165 +1,249 @@
-```html
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - Quản lý Thư viện</title>
+    <!-- Phông chữ Inter hiện đại -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #0b0d13;
+            --bg-card: #151821;
+            --bg-card-hover: #1c202c;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.18);
+            --text-main: #f1f5f9;
+            --text-muted: #8492a6;
+            --accent-blue: #3b82f6;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+        }
 
-    <title>Library Management</title>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
 
-    <link rel="stylesheet" href="css/style.css">
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 960px;
+            width: 100%;
+            background: rgba(21, 24, 33, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(11, 13, 19, 0.6);
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            width: fit-content;
+            margin: 0 auto 40px auto;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+        }
+
+        nav a:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        nav a.active {
+            color: var(--text-main);
+            background: #202534;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Header Section */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .welcome-section h1 {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(180deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .welcome-section p {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* Dashboard Grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-hover);
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.6);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--card-accent, #64748b);
+            opacity: 0.85;
+        }
+
+        .card h3 {
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card h3::after {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--card-accent, #64748b);
+            box-shadow: 0 0 8px var(--card-accent, #64748b);
+        }
+
+        .card p {
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        /* Accent Colors */
+        .card-books { --card-accent: var(--accent-blue); }
+        .card-readers { --card-accent: var(--accent-emerald); }
+        .card-borrowed { --card-accent: var(--accent-amber); }
+        
+        .card-overdue {
+            --card-accent: var(--accent-rose);
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 28px;
+        }
+
+        .card-overdue h3 {
+            margin: 0;
+            font-size: 14px;
+            gap: 12px;
+        }
+
+        .card-overdue p {
+            font-size: 34px;
+            color: var(--accent-rose);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 24px; }
+            .dashboard { grid-template-columns: 1fr; }
+            nav { width: 100%; flex-wrap: wrap; }
+            .card-overdue { flex-direction: column; align-items: flex-start; gap: 10px; }
+        }
+    </style>
 </head>
-
 <body>
-
-<div class="layout">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-
-        <div class="logo">
-            📚 Library
-        </div>
-
+    <div class="container">
         <nav>
-
-            <a href="index.html" class="active">
-                🏠 Dashboard
-            </a>
-
-            <a href="books.html">
-                📖 Quản lý sách
-            </a>
-
-            <a href="readers.html">
-                👤 Độc giả
-            </a>
-
-            <a href="borrow.html">
-                🔄 Mượn / trả sách
-            </a>
-
+            <a href="index.html" class="active">Trang chủ</a>
+            <a href="books.html">Quản lý Sách</a>
+            <a href="readers.html">Quản lý Độc giả</a>
+            <a href="borrow.html">Mượn / Trả sách</a>
         </nav>
 
-    </aside>
+        <div class="welcome-section">
+            <h1>Hệ thống Quản lý Thư viện</h1>
+            <p>Tổng quan hoạt động và dữ liệu thời gian thực</p>
+        </div>
 
-
-    <!-- MAIN -->
-    <main class="main">
-
-        <header class="topbar">
-
-            <div>
-                <h1>Dashboard</h1>
-                <p>Hệ thống quản lý thư viện</p>
+        <div class="dashboard">
+            <div class="card card-books">
+                <h3>Tổng số sách</h3>
+                <p id="totalBooks">0</p>
+            </div>
+            
+            <div class="card card-readers">
+                <h3>Tổng độc giả</h3>
+                <p id="totalReaders">0</p>
+            </div>
+            
+            <div class="card card-borrowed">
+                <h3>Đang cho mượn</h3>
+                <p id="totalBorrowed">0</p>
             </div>
 
-            <div class="admin">
-                👤 Admin
+            <div class="card card-overdue">
+                <h3>Phiếu quá hạn chưa trả</h3>
+                <p id="totalOverdue">0</p>
             </div>
+        </div>
+    </div>
 
-        </header>
-
-
-        <!-- STATISTICS -->
-
-        <section class="statistics">
-
-            <div class="stat-card">
-                <div>
-                    <p>Tổng số sách</p>
-                    <h2 id="totalBooks">0</h2>
-                </div>
-
-                <span class="stat-icon">📚</span>
-            </div>
-
-
-            <div class="stat-card">
-                <div>
-                    <p>Độc giả</p>
-                    <h2 id="totalReaders">0</h2>
-                </div>
-
-                <span class="stat-icon">👥</span>
-            </div>
-
-
-            <div class="stat-card">
-                <div>
-                    <p>Đang mượn</p>
-                    <h2 id="totalBorrowing">0</h2>
-                </div>
-
-                <span class="stat-icon">📕</span>
-            </div>
-
-
-            <div class="stat-card">
-                <div>
-                    <p>Quá hạn</p>
-                    <h2 id="totalOverdue">0</h2>
-                </div>
-
-                <span class="stat-icon">⚠️</span>
-            </div>
-
-        </section>
-
-
-        <!-- RECENT BORROW -->
-
-        <section class="content-card">
-
-            <div class="section-header">
-
-                <div>
-                    <h2>Phiếu mượn gần đây</h2>
-                    <p>Danh sách các lượt mượn sách</p>
-                </div>
-
-                <a href="borrow.html" class="btn">
-                    + Mượn sách
-                </a>
-
-            </div>
-
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                    <tr>
-                        <th>Mã phiếu</th>
-                        <th>Độc giả</th>
-                        <th>Sách</th>
-                        <th>Ngày mượn</th>
-                        <th>Hạn trả</th>
-                        <th>Trạng thái</th>
-                    </tr>
-
-                    </thead>
-
-                    <tbody id="recentBorrowTable">
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-    </main>
-
-</div>
-
-<script src="js/main.js"></script>
-
+    <script src="js/main.js"></script>
 </body>
-
 </html>
-```
