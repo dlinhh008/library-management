@@ -19,6 +19,8 @@
             --text-main: #f1f5f9;
             --text-muted: #8492a6;
             --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #a855f7;
             --accent-emerald: #10b981;
             --accent-amber: #f59e0b;
             --accent-rose: #f43f5e;
@@ -43,7 +45,7 @@
         }
 
         .container {
-            max-width: 960px;
+            max-width: 980px;
             width: 100%;
             background: rgba(21, 24, 33, 0.7);
             backdrop-filter: blur(20px);
@@ -91,11 +93,11 @@
         /* Header Section */
         .welcome-section {
             text-align: center;
-            margin-bottom: 45px;
+            margin-bottom: 35px;
         }
 
         .welcome-section h1 {
-            font-size: 30px;
+            font-size: 28px;
             font-weight: 700;
             letter-spacing: -0.5px;
             background: linear-gradient(180deg, #ffffff 0%, #a5b4fc 100%);
@@ -110,7 +112,7 @@
             font-weight: 400;
         }
 
-        /* Dashboard Grid */
+        /* Dashboard Grid Layout (2 hàng thẻ) */
         .dashboard {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -121,7 +123,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            padding: 24px;
+            padding: 22px 24px;
             position: relative;
             overflow: hidden;
             transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
@@ -145,12 +147,12 @@
         }
 
         .card h3 {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.6px;
             color: var(--text-muted);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -158,52 +160,45 @@
 
         .card h3::after {
             content: '';
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: var(--card-accent, #64748b);
             box-shadow: 0 0 8px var(--card-accent, #64748b);
         }
 
         .card p {
-            font-size: 38px;
+            font-size: 34px;
             font-weight: 700;
             color: var(--text-main);
             letter-spacing: -1px;
             line-height: 1;
         }
 
-        /* Accent Colors */
-        .card-books { --card-accent: var(--accent-blue); }
+        /* Phối màu các thẻ */
+        .card-total-books { --card-accent: var(--accent-blue); }
+        .card-paper-books { --card-accent: var(--accent-cyan); }
+        .card-online-books { --card-accent: var(--accent-purple); }
         .card-readers { --card-accent: var(--accent-emerald); }
         .card-borrowed { --card-accent: var(--accent-amber); }
         
         .card-overdue {
             --card-accent: var(--accent-rose);
-            grid-column: 1 / -1;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 28px;
-        }
-
-        .card-overdue h3 {
-            margin: 0;
-            font-size: 14px;
-            gap: 12px;
         }
 
         .card-overdue p {
-            font-size: 34px;
             color: var(--accent-rose);
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 820px) {
             .container { padding: 24px; }
-            .dashboard { grid-template-columns: 1fr; }
+            .dashboard { grid-template-columns: repeat(2, 1fr); }
             nav { width: 100%; flex-wrap: wrap; }
-            .card-overdue { flex-direction: column; align-items: flex-start; gap: 10px; }
+        }
+
+        @media (max-width: 540px) {
+            .dashboard { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -222,11 +217,23 @@
         </div>
 
         <div class="dashboard">
-            <div class="card card-books">
+            <!-- Hàng 1: Thống kê sách (Tổng thể & Phân loại) -->
+            <div class="card card-total-books">
                 <h3>Tổng số sách</h3>
                 <p id="totalBooks">0</p>
             </div>
+
+            <div class="card card-paper-books">
+                <h3>Sách giấy</h3>
+                <p id="totalPaperBooks">0</p>
+            </div>
+
+            <div class="card card-online-books">
+                <h3>Sách online</h3>
+                <p id="totalOnlineBooks">0</p>
+            </div>
             
+            <!-- Hàng 2: Mượn trả & Độc giả -->
             <div class="card card-readers">
                 <h3>Tổng độc giả</h3>
                 <p id="totalReaders">0</p>
@@ -238,7 +245,7 @@
             </div>
 
             <div class="card card-overdue">
-                <h3>Phiếu quá hạn chưa trả</h3>
+                <h3>Phiếu quá hạn</h3>
                 <p id="totalOverdue">0</p>
             </div>
         </div>
