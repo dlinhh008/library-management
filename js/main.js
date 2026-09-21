@@ -18,28 +18,18 @@ function isOverdue(dueDateStr) {
 }
 
 function updateDashboardStats() {
-    // 1. Lấy dữ liệu từ LocalStorage
-    let books = JSON.parse(localStorage.getItem('books')) || [];
-    let readers = JSON.parse(localStorage.getItem('readers')) || []; 
+    // 1. Dữ liệu Sách & Độc giả: Đang là null (chờ tích hợp API / Database từ backend)
+    const books = null;
+    const readers = null;
+
+    // Hiển thị 0 hoặc "--" trên giao diện thay vì đọc nhầm dữ liệu cũ
+    document.getElementById('totalBooks').innerText = books ? books.length : "0";
+    document.getElementById('totalPaperBooks').innerText = books ? books.filter(b => (b.type || "Sách giấy") === "Sách giấy").length : "0";
+    document.getElementById('totalOnlineBooks').innerText = books ? books.filter(b => b.type === "Sách online").length : "0";
+    document.getElementById('totalReaders').innerText = readers ? readers.length : "0";
+
+    // 2. Dữ liệu Mượn / Trả (nếu có dùng tạm mock local hoặc để 0 chờ backend)
     let borrowRecords = JSON.parse(localStorage.getItem('borrowRecords')) || [];
-
-    // 2. Thống kê phân loại Sách
-    let totalBooks = books.length;
-    let totalPaperBooks = 0;
-    let totalOnlineBooks = 0;
-
-    books.forEach(book => {
-        // Nếu sách chưa gắn type thì mặc định tính là Sách giấy
-        let type = book.type || "Sách giấy";
-        if (type === "Sách online") {
-            totalOnlineBooks++;
-        } else {
-            totalPaperBooks++;
-        }
-    });
-
-    // 3. Thống kê Độc giả & Tình trạng Mượn trả
-    let totalReaders = readers.length;
     let totalBorrowed = 0;
     let totalOverdue = 0;
 
@@ -52,11 +42,6 @@ function updateDashboardStats() {
         }
     });
 
-    // 4. Đẩy số liệu lên giao diện
-    document.getElementById('totalBooks').innerText = totalBooks;
-    document.getElementById('totalPaperBooks').innerText = totalPaperBooks;
-    document.getElementById('totalOnlineBooks').innerText = totalOnlineBooks;
-    document.getElementById('totalReaders').innerText = totalReaders;
     document.getElementById('totalBorrowed').innerText = totalBorrowed;
     document.getElementById('totalOverdue').innerText = totalOverdue;
 }
