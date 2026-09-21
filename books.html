@@ -1,245 +1,86 @@
-
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Quản lý sách</title>
-
-    <link rel="stylesheet"
-          href="css/style.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Sách</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
-
 <body>
-
-<div class="layout">
-
-
-    <!-- SIDEBAR -->
-
-    <aside class="sidebar">
-
-        <div class="logo">
-            📚 Library
-        </div>
-
+    <div class="container">
         <nav>
-
-            <a href="index.html">
-                🏠 Dashboard
-            </a>
-
-            <a href="books.html"
-               class="active">
-                📖 Quản lý sách
-            </a>
-
-            <a href="readers.html">
-                👤 Độc giả
-            </a>
-
-            <a href="borrow.html">
-                🔄 Mượn / trả sách
-            </a>
-
+            <a href="index.html">Trang chủ</a>
+            <a href="books.html" class="active">Quản lý Sách</a>
+            <a href="readers.html">Quản lý Độc giả</a>
+            <a href="borrow.html">Mượn / Trả sách</a>
         </nav>
 
-    </aside>
+        <div class="page-header">
+            <h2>Danh mục Quản lý Sách</h2>
+        </div>
 
+        <div class="controls-bar">
+            <input type="text" id="searchBook" class="search-input" placeholder="Tìm theo mã, tên, phân loại..." onkeyup="searchBooks()">
+            <button class="btn btn-add" onclick="openBookForm()">+ Thêm sách</button>
+        </div>
 
-    <!-- MAIN -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã sách</th>
+                    <th>Tên sách</th>
+                    <th>Tác giả</th>
+                    <th>Thể loại</th>
+                    <th>Phân loại</th>
+                    <th>Số lượng</th>
+                    <th>Còn lại</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="bookTable"></tbody>
+        </table>
+    </div>
 
-    <main class="main">
-
-        <header class="topbar">
-
-            <div>
-
-                <h1>Quản lý sách</h1>
-
-                <p>
-                    Thêm, sửa, xóa và tìm kiếm sách
-                </p>
-
-            </div>
-
-            <div class="admin">
-                👤 Admin
-            </div>
-
-        </header>
-
-
-        <section class="content-card">
-
-            <div class="section-header">
-
-                <h2>Danh sách sách</h2>
-
-                <button
-                    class="btn"
-                    onclick="openBookForm()">
-
-                    + Thêm sách
-
-                </button>
-
-            </div>
-
-
-            <input
-                type="text"
-                id="searchBook"
-                class="search-box"
-                placeholder="🔍 Tìm kiếm sách..."
-                onkeyup="searchBooks()">
-
-
-            <!-- FORM -->
-
-            <div id="bookForm"
-                 style="display:none; margin-bottom:30px;">
-
-                <h3>Thông tin sách</h3>
-
-                <br>
-
+    <!-- Modal Form Sách -->
+    <div id="bookModal" class="modal-overlay">
+        <div class="modal-card">
+            <h3 id="formTitle">Thông Tin Sách</h3>
+            <form id="bookForm" onsubmit="event.preventDefault(); saveBook();">
                 <div class="form-group">
-
                     <label>Mã sách</label>
-
-                    <input
-                        type="text"
-                        id="bookId"
-                        placeholder="Ví dụ: S004">
-
+                    <input type="text" id="bookId" required>
                 </div>
-
-
                 <div class="form-group">
-
                     <label>Tên sách</label>
-
-                    <input
-                        type="text"
-                        id="bookTitle"
-                        placeholder="Tên sách">
-
+                    <input type="text" id="bookTitle" required>
                 </div>
-
-
                 <div class="form-group">
-
                     <label>Tác giả</label>
-
-                    <input
-                        type="text"
-                        id="bookAuthor"
-                        placeholder="Tên tác giả">
-
+                    <input type="text" id="bookAuthor" required>
                 </div>
-
-
                 <div class="form-group">
-
                     <label>Thể loại</label>
-
-                    <input
-                        type="text"
-                        id="bookCategory"
-                        placeholder="Thể loại">
-
+                    <input type="text" id="bookCategory" required>
                 </div>
-
-
                 <div class="form-group">
-
-                    <label>Số lượng</label>
-
-                    <input
-                        type="number"
-                        id="bookQuantity"
-                        min="1">
-
+                    <label>Phân loại sách</label>
+                    <select id="bookType" required>
+                        <option value="Sách giấy">Sách giấy</option>
+                        <option value="Sách online">Sách online</option>
+                    </select>
                 </div>
+                <div class="form-group">
+                    <label>Số lượng</label>
+                    <input type="number" id="bookQuantity" min="1" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    <button type="button" class="btn btn-edit" onclick="closeBookForm()">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-
-                <button
-                    class="btn"
-                    onclick="saveBook()">
-
-                    Lưu sách
-
-                </button>
-
-                <button
-                    class="btn-delete"
-                    onclick="closeBookForm()">
-
-                    Hủy
-
-                </button>
-
-            </div>
-
-
-            <!-- TABLE -->
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                    <tr>
-
-                        <th>Mã sách</th>
-
-                        <th>Tên sách</th>
-
-                        <th>Tác giả</th>
-
-                        <th>Thể loại</th>
-
-                        <th>Số lượng</th>
-
-                        <th>Còn lại</th>
-
-                        <th>Thao tác</th>
-
-                    </tr>
-
-                    </thead>
-
-
-                    <tbody id="bookTable">
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-    </main>
-
-</div>
-
-
-<script src="js/main.js"></script>
-
-<script src="js/books.js"></script>
-
-
+    <script src="js/books.js"></script>
 </body>
-
 </html>
-

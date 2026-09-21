@@ -1,207 +1,84 @@
-```html
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Mượn / trả sách</title>
-
-    <link rel="stylesheet"
-          href="css/style.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mượn / Trả sách</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
-
 <body>
-
-<div class="layout">
-
-
-    <aside class="sidebar">
-
-        <div class="logo">
-            📚 Library
-        </div>
-
+    <div class="container">
         <nav>
-
-            <a href="index.html">
-                🏠 Dashboard
-            </a>
-
-            <a href="books.html">
-                📖 Quản lý sách
-            </a>
-
-            <a href="readers.html">
-                👤 Độc giả
-            </a>
-
-            <a href="borrow.html"
-               class="active">
-                🔄 Mượn / trả sách
-            </a>
-
+            <a href="index.html">Trang chủ</a>
+            <a href="books.html">Quản lý Sách</a>
+            <a href="readers.html">Quản lý Độc giả</a>
+            <a href="borrow.html" class="active">Mượn / Trả sách</a>
         </nav>
 
-    </aside>
+        <div class="page-header">
+            <h2>Quản lý Mượn / Trả & Phạt</h2>
+            <button class="btn btn-add" onclick="document.getElementById('borrowModal').style.display='block'">+ Tạo phiếu mượn</button>
+        </div>
 
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã phiếu</th>
+                    <th>Người mượn</th>
+                    <th>Tên sách</th>
+                    <th>Hạn trả</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="borrowTableBody"></tbody>
+        </table>
+    </div>
 
-    <main class="main">
-
-        <header class="topbar">
-
-            <div>
-
-                <h1>Mượn / trả sách</h1>
-
-                <p>
-                    Quản lý các phiếu mượn
-                </p>
-
-            </div>
-
-            <div class="admin">
-                👤 Admin
-            </div>
-
-        </header>
-
-
-        <section class="content-card">
-
-            <div class="section-header">
-
-                <h2>Danh sách phiếu mượn</h2>
-
-                <button
-                    class="btn"
-                    onclick="openBorrowForm()">
-
-                    + Tạo phiếu mượn
-
-                </button>
-
-            </div>
-
-
-            <!-- FORM -->
-
-            <div id="borrowForm"
-                 style="display:none; margin-bottom:30px;">
-
-                <h3>Tạo phiếu mượn</h3>
-
-                <br>
-
-
+    <!-- Modal Mượn sách -->
+    <div id="borrowModal" class="modal-overlay">
+        <div class="modal-card">
+            <h3>Tạo phiếu mượn mới</h3>
+            <form id="borrowForm">
                 <div class="form-group">
-
-                    <label>Độc giả</label>
-
-                    <select id="borrowReader">
-
-                    </select>
-
+                    <label>Mã phiếu mượn</label>
+                    <input type="text" id="borrowId" required>
                 </div>
-
-
                 <div class="form-group">
-
-                    <label>Sách</label>
-
-                    <select id="borrowBook">
-
-                    </select>
-
+                    <label>Tên người mượn</label>
+                    <input type="text" id="readerName" required>
                 </div>
-
-
                 <div class="form-group">
-
-                    <label>Hạn trả</label>
-
-                    <input
-                        type="date"
-                        id="dueDate">
-
+                    <label>Tên sách mượn</label>
+                    <input type="text" id="bookTitle" required>
                 </div>
+                <div class="form-group">
+                    <label>Ngày hẹn trả</label>
+                    <input type="date" id="dueDate" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Xác nhận</button>
+                    <button type="button" class="btn btn-edit" onclick="document.getElementById('borrowModal').style.display='none'">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-
-                <button
-                    class="btn"
-                    onclick="createBorrow()">
-
-                    Tạo phiếu
-
-                </button>
-
-
-                <button
-                    class="btn-delete"
-                    onclick="closeBorrowForm()">
-
-                    Hủy
-
-                </button>
-
+    <!-- Modal Phiếu Phạt -->
+    <div id="penaltyModal" class="modal-overlay">
+        <div class="modal-card" style="border-color: rgba(251, 113, 133, 0.4);">
+            <h3 style="color: #fb7185;">PHIẾU PHẠT QUÁ HẠN</h3>
+            <p style="margin-bottom: 8px; color: var(--text-secondary);">Mã mượn: <strong id="penaltyBorrowId" style="color: #fff;"></strong></p>
+            <p style="margin-bottom: 8px; color: var(--text-secondary);">Độc giả: <strong id="penaltyReader" style="color: #fff;"></strong></p>
+            <p style="margin-bottom: 8px; color: var(--text-secondary);">Hạn trả: <strong id="penaltyDueDate" style="color: #fff;"></strong></p>
+            <p style="margin-bottom: 8px; color: var(--text-secondary);">Quá hạn: <strong id="penaltyDays" style="color: #fbbf24;"></strong> ngày</p>
+            <p style="margin: 16px 0; font-size: 18px; color: var(--text-secondary);">Tiền phạt: <span id="penaltyAmount" style="color: #fb7185; font-weight: 700; font-size: 22px;"></span> VNĐ</p>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-edit" style="width: 100%;" onclick="document.getElementById('penaltyModal').style.display='none'">Đóng</button>
             </div>
+        </div>
+    </div>
 
-
-            <!-- TABLE -->
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                    <tr>
-
-                        <th>Mã phiếu</th>
-
-                        <th>Độc giả</th>
-
-                        <th>Sách</th>
-
-                        <th>Ngày mượn</th>
-
-                        <th>Hạn trả</th>
-
-                        <th>Trạng thái</th>
-
-                        <th>Thao tác</th>
-
-                    </tr>
-
-                    </thead>
-
-
-                    <tbody id="borrowTable">
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-    </main>
-
-</div>
-
-
-<script src="js/main.js"></script>
-
-<script src="js/borrow.js"></script>
-
+    <script src="js/borrow.js"></script>
 </body>
-
 </html>
-```

@@ -1,219 +1,72 @@
-```html
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Quản lý độc giả</title>
-
-    <link rel="stylesheet"
-          href="css/style.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Độc giả</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
-
 <body>
-
-<div class="layout">
-
-
-    <aside class="sidebar">
-
-        <div class="logo">
-            📚 Library
-        </div>
-
+    <div class="container">
         <nav>
-
-            <a href="index.html">
-                🏠 Dashboard
-            </a>
-
-            <a href="books.html">
-                📖 Quản lý sách
-            </a>
-
-            <a href="readers.html"
-               class="active">
-                👤 Độc giả
-            </a>
-
-            <a href="borrow.html">
-                🔄 Mượn / trả sách
-            </a>
-
+            <a href="index.html">Trang chủ</a>
+            <a href="books.html">Quản lý Sách</a>
+            <a href="readers.html" class="active">Quản lý Độc giả</a>
+            <a href="borrow.html">Mượn / Trả sách</a>
         </nav>
 
-    </aside>
+        <div class="page-header">
+            <h2>Danh mục Quản lý Độc giả</h2>
+            <button class="btn btn-add" onclick="openReaderForm()">+ Thêm độc giả</button>
+        </div>
 
+        <div class="controls-bar">
+            <input type="text" id="searchReader" class="search-input" placeholder="Tìm theo mã hoặc tên độc giả..." onkeyup="searchReaders()">
+        </div>
 
-    <main class="main">
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã thẻ</th>
+                    <th>Họ và tên</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="readerTable"></tbody>
+        </table>
+    </div>
 
-        <header class="topbar">
-
-            <div>
-
-                <h1>Quản lý độc giả</h1>
-
-                <p>
-                    Quản lý thông tin độc giả
-                </p>
-
-            </div>
-
-            <div class="admin">
-                👤 Admin
-            </div>
-
-        </header>
-
-
-        <section class="content-card">
-
-            <div class="section-header">
-
-                <h2>Danh sách độc giả</h2>
-
-                <button
-                    class="btn"
-                    onclick="openReaderForm()">
-
-                    + Thêm độc giả
-
-                </button>
-
-            </div>
-
-
-            <input
-                type="text"
-                id="searchReader"
-                class="search-box"
-                placeholder="🔍 Tìm độc giả..."
-                onkeyup="searchReaders()">
-
-
-            <div id="readerForm"
-                 style="display:none; margin-bottom:30px;">
-
-                <h3>Thông tin độc giả</h3>
-
-                <br>
-
-
+    <!-- Modal Thêm/Sửa Độc giả -->
+    <div id="readerModal" class="modal-overlay">
+        <div class="modal-card">
+            <h3 id="readerFormTitle">Thông Tin Độc Giả</h3>
+            <form id="readerForm" onsubmit="event.preventDefault(); saveReader();">
                 <div class="form-group">
-
                     <label>Mã độc giả</label>
-
-                    <input
-                        id="readerId"
-                        placeholder="DG003">
-
+                    <input type="text" id="readerId" required>
                 </div>
-
-
                 <div class="form-group">
-
-                    <label>Họ tên</label>
-
-                    <input
-                        id="readerName"
-                        placeholder="Nguyễn Văn A">
-
+                    <label>Họ và tên</label>
+                    <input type="text" id="readerName" required>
                 </div>
-
-
                 <div class="form-group">
-
                     <label>Email</label>
-
-                    <input
-                        id="readerEmail"
-                        type="email"
-                        placeholder="email@gmail.com">
-
+                    <input type="email" id="readerEmail" required>
                 </div>
-
-
                 <div class="form-group">
-
                     <label>Số điện thoại</label>
-
-                    <input
-                        id="readerPhone"
-                        placeholder="0901234567">
-
+                    <input type="text" id="readerPhone" required>
                 </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    <button type="button" class="btn btn-edit" onclick="closeReaderForm()">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-
-                <button
-                    class="btn"
-                    onclick="saveReader()">
-
-                    Lưu
-
-                </button>
-
-
-                <button
-                    class="btn-delete"
-                    onclick="closeReaderForm()">
-
-                    Hủy
-
-                </button>
-
-            </div>
-
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                    <tr>
-
-                        <th>Mã độc giả</th>
-
-                        <th>Họ tên</th>
-
-                        <th>Email</th>
-
-                        <th>Số điện thoại</th>
-
-                        <th>Thao tác</th>
-
-                    </tr>
-
-                    </thead>
-
-
-                    <tbody id="readerTable">
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-    </main>
-
-</div>
-
-
-<script src="js/main.js"></script>
-
-<script src="js/readers.js"></script>
-
+    <script src="js/readers.js"></script>
 </body>
-
 </html>
-```
