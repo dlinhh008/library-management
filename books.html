@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Quản lý sách</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            📚 Library
+        </div>
+
+        <nav>
+
+            <a href="index.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="books.html"
+               class="active">
+                📖 Quản lý sách
+            </a>
+
+            <a href="readers.html">
+                👤 Độc giả
+            </a>
+
+            <a href="borrow.html">
+                🔄 Mượn / trả sách
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Quản lý sách</h1>
+
+                <p>
+                    Thêm, sửa, xóa và tìm kiếm sách
+                </p>
+
+            </div>
+
+            <div class="admin">
+                👤 Admin
+            </div>
+
+        </header>
+
+
+        <section class="content-card">
+
+            <div class="section-header">
+
+                <h2>Danh sách sách</h2>
+
+                <button
+                    class="btn"
+                    onclick="openBookForm()">
+
+                    + Thêm sách
+
+                </button>
+
+            </div>
+
+
+            <input
+                type="text"
+                id="searchBook"
+                class="search-box"
+                placeholder="🔍 Tìm kiếm sách..."
+                onkeyup="searchBooks()">
+
+
+            <!-- FORM -->
+
+            <div id="bookForm"
+                 style="display:none; margin-bottom:30px;">
+
+                <h3>Thông tin sách</h3>
+
+                <br>
+
+                <div class="form-group">
+
+                    <label>Mã sách</label>
+
+                    <input
+                        type="text"
+                        id="bookId"
+                        placeholder="Ví dụ: S004">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Tên sách</label>
+
+                    <input
+                        type="text"
+                        id="bookTitle"
+                        placeholder="Tên sách">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Tác giả</label>
+
+                    <input
+                        type="text"
+                        id="bookAuthor"
+                        placeholder="Tên tác giả">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Thể loại</label>
+
+                    <input
+                        type="text"
+                        id="bookCategory"
+                        placeholder="Thể loại">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Số lượng</label>
+
+                    <input
+                        type="number"
+                        id="bookQuantity"
+                        min="1">
+
+                </div>
+
+
+                <button
+                    class="btn"
+                    onclick="saveBook()">
+
+                    Lưu sách
+
+                </button>
+
+                <button
+                    class="btn-delete"
+                    onclick="closeBookForm()">
+
+                    Hủy
+
+                </button>
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Mã sách</th>
+
+                        <th>Tên sách</th>
+
+                        <th>Tác giả</th>
+
+                        <th>Thể loại</th>
+
+                        <th>Số lượng</th>
+
+                        <th>Còn lại</th>
+
+                        <th>Thao tác</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="bookTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="js/main.js"></script>
+
+<script src="js/books.js"></script>
+
+
+</body>
+
+</html>
+

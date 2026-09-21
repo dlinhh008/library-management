@@ -1,0 +1,165 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Library Management</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            📚 Library
+        </div>
+
+        <nav>
+
+            <a href="index.html" class="active">
+                🏠 Dashboard
+            </a>
+
+            <a href="books.html">
+                📖 Quản lý sách
+            </a>
+
+            <a href="readers.html">
+                👤 Độc giả
+            </a>
+
+            <a href="borrow.html">
+                🔄 Mượn / trả sách
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Dashboard</h1>
+                <p>Hệ thống quản lý thư viện</p>
+            </div>
+
+            <div class="admin">
+                👤 Admin
+            </div>
+
+        </header>
+
+
+        <!-- STATISTICS -->
+
+        <section class="statistics">
+
+            <div class="stat-card">
+                <div>
+                    <p>Tổng số sách</p>
+                    <h2 id="totalBooks">0</h2>
+                </div>
+
+                <span class="stat-icon">📚</span>
+            </div>
+
+
+            <div class="stat-card">
+                <div>
+                    <p>Độc giả</p>
+                    <h2 id="totalReaders">0</h2>
+                </div>
+
+                <span class="stat-icon">👥</span>
+            </div>
+
+
+            <div class="stat-card">
+                <div>
+                    <p>Đang mượn</p>
+                    <h2 id="totalBorrowing">0</h2>
+                </div>
+
+                <span class="stat-icon">📕</span>
+            </div>
+
+
+            <div class="stat-card">
+                <div>
+                    <p>Quá hạn</p>
+                    <h2 id="totalOverdue">0</h2>
+                </div>
+
+                <span class="stat-icon">⚠️</span>
+            </div>
+
+        </section>
+
+
+        <!-- RECENT BORROW -->
+
+        <section class="content-card">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Phiếu mượn gần đây</h2>
+                    <p>Danh sách các lượt mượn sách</p>
+                </div>
+
+                <a href="borrow.html" class="btn">
+                    + Mượn sách
+                </a>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>Mã phiếu</th>
+                        <th>Độc giả</th>
+                        <th>Sách</th>
+                        <th>Ngày mượn</th>
+                        <th>Hạn trả</th>
+                        <th>Trạng thái</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="recentBorrowTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="js/main.js"></script>
+
+</body>
+
+</html>
+```

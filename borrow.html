@@ -1,0 +1,207 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mượn / trả sách</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="layout">
+
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            📚 Library
+        </div>
+
+        <nav>
+
+            <a href="index.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="books.html">
+                📖 Quản lý sách
+            </a>
+
+            <a href="readers.html">
+                👤 Độc giả
+            </a>
+
+            <a href="borrow.html"
+               class="active">
+                🔄 Mượn / trả sách
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Mượn / trả sách</h1>
+
+                <p>
+                    Quản lý các phiếu mượn
+                </p>
+
+            </div>
+
+            <div class="admin">
+                👤 Admin
+            </div>
+
+        </header>
+
+
+        <section class="content-card">
+
+            <div class="section-header">
+
+                <h2>Danh sách phiếu mượn</h2>
+
+                <button
+                    class="btn"
+                    onclick="openBorrowForm()">
+
+                    + Tạo phiếu mượn
+
+                </button>
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <div id="borrowForm"
+                 style="display:none; margin-bottom:30px;">
+
+                <h3>Tạo phiếu mượn</h3>
+
+                <br>
+
+
+                <div class="form-group">
+
+                    <label>Độc giả</label>
+
+                    <select id="borrowReader">
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Sách</label>
+
+                    <select id="borrowBook">
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Hạn trả</label>
+
+                    <input
+                        type="date"
+                        id="dueDate">
+
+                </div>
+
+
+                <button
+                    class="btn"
+                    onclick="createBorrow()">
+
+                    Tạo phiếu
+
+                </button>
+
+
+                <button
+                    class="btn-delete"
+                    onclick="closeBorrowForm()">
+
+                    Hủy
+
+                </button>
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Mã phiếu</th>
+
+                        <th>Độc giả</th>
+
+                        <th>Sách</th>
+
+                        <th>Ngày mượn</th>
+
+                        <th>Hạn trả</th>
+
+                        <th>Trạng thái</th>
+
+                        <th>Thao tác</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="borrowTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="js/main.js"></script>
+
+<script src="js/borrow.js"></script>
+
+</body>
+
+</html>
+```
